@@ -25,69 +25,41 @@
 		var map;
 		$("ul li a").on("click", function (event){
 			var country = $(this).attr("data-map");
+			var mapHeight = $(this).attr("data-map-height");
 			console.log(country);
-			$('#map3').empty();
-			$('#map3').append('<div id="map" style="height: 300px">hello</div>')
+			$('#map').empty();
+			$('#map').css('height', mapHeight)
+			$('#map').append('<div id="paper-map" style="height: ' + mapHeight + 'px"></div>')
 
 			 if (map !== undefined)
 			 	console.log(map.getPaper);
 
-			map = $('#map').usmap({
+			map = $('#paper-map').usmap({
 					country: country,
 					stateStyles: { fill: "#187d91", stroke: "#000", "stroke-width": 1 },
 					stateHoverStyles: { fill: " #f1c40f" },
-					showLabels: true
+					showLabels: true,
+					click : function(event, data) {
+						$('#alert')
+								.text('Click '+data.name+' on map 1')
+								.stop()
+								.css('backgroundColor', '#ff0')
+								.animate({backgroundColor: '#ddd'}, 1000);
+					}
 				});
 			event.preventDefault();
 		});
-
-		// $('#map1').usmap({
-		// 	stateStyles: { fill: "#187d91", stroke: "#000", "stroke-width": 1 },
-		// 	stateHoverStyles: { fill: " #f1c40f" },
-		// 	showLabels: true
-		// });
-		//
-		// $('#map2').usmap({
-		// 	country: 'CA',
-		// 	stateStyles: { fill: "#187d91", stroke: "#000", "stroke-width": 1 },
-		// 	stateHoverStyles: { fill: " #f1c40f" },
-		// 	showLabels: true
-		// });
-		// $('#map3').usmap({
-		// 	country: 'UK',
-		// 	stateStyles: { fill: "#187d91", stroke: "#000", "stroke-width": 1 },
-		// 	stateHoverStyles: { fill: " #f1c40f" },
-		// 	showLabels: true,
-		// 	'click' : function(event, data) {
-		// 		$('#alert')
-		// 				.text('Click '+data.name+' on map 1')
-		// 				.stop()
-		// 				.css('backgroundColor', '#ff0')
-		// 				.animate({backgroundColor: '#ddd'}, 1000);
-		// 	}
-		// });
-
-		// $('#map4').usmap({
-		// 	country: 'AU',
-		// 	stateStyles: { fill: "#187d91", stroke: "#000", "stroke-width": 1 },
-		// 	stateHoverStyles: { fill: " #f1c40f" },
-		// 	showLabels: true
-		// });
-
 	});
 	</script>
 </head>
 <body>
   <div id="alert">Click alerts</div>
   <ul>
-	  <li><a href="#" data-map="US">United States</a></li>
-	  <li><a href="#" data-map="UK">United Kingdom</a></li>
-	  <li><a href="#" data-map="CA">Canada</a></li>
-	  <li><a href="#" data-map="AU">Australia</a></li>
+	  <li><a href="#" data-map="US" data-map-height="200">United States</a></li>
+	  <li><a href="#" data-map="UK" data-map-height="412">United Kingdom</a></li>
+	  <li><a href="#" data-map="CA" data-map-height="450">Canada</a></li>
+	  <li><a href="#" data-map="AU" data-map-height="300">Australia</a></li>
   </ul>
-<!--  <div id="map1" style="width: 380px; height: 200px; border: solid 3px red;"></div>-->
-<!--  <div id="map2" style="width: 380px; height: 300px; border: solid 3px red;"></div>-->
-  <div id="map3" style="width: 380px; height: 500px; border: solid 3px red;"></div>
-<!--  <div id="map4" style="width: 380px; height: 300px; border: solid 3px red;"></div>-->
+  <div id="map" style="width: 380px; height: 200px; border: solid 3px red;"></div>
 </body>
 </html>
